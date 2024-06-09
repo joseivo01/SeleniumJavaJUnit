@@ -18,6 +18,7 @@ import utils.OptionsManager;
 public abstract class BasePage {
     public WebDriver driver;
     public Properties properties;
+    // Add comment
     // Created:
     public OptionsManager optionsManager;
 
