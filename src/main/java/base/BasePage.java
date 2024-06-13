@@ -3,6 +3,9 @@ package base;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +29,7 @@ public abstract class BasePage {
     @FindBy(css="input[name='home'][value='Home']")
     private WebElement homeButton;
 
-    private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
+    private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
 
     public WebDriver initDriver(String browser){
         System.out.println("Browser value is : " + browser);
@@ -57,5 +60,28 @@ public abstract class BasePage {
 
     public static synchronized WebDriver getDriver() {
         return tlDriver.get();
+    }
+
+    public Properties initProp() {
+        properties = new Properties();
+        try (FileInputStream ip = new FileInputStream("../config/config.properties")) {
+            properties.load(ip);
+        } catch (FileNotFoundException e) {
+            System.err.println("Config file not found: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("Error loading config file: " + e.getMessage());
+        }
+        return properties;
+    }
+
+    public static void closeDriver(){
+        if(tlDriver != null){
+            tlDriver.get().quit();
+            tlDriver.remove();
+        }
+    }
+
+    public void returnToHome(){
+        homeButton.click();
     }
 }
