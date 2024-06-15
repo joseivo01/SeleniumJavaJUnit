@@ -6,11 +6,13 @@ import org.openqa.selenium.WebDriver;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.FindBy;
@@ -18,7 +20,7 @@ import org.openqa.selenium.support.FindBy;
 import utils.ElementUtil;
 import utils.OptionsManager;
 
-public abstract class BasePage {
+public class BasePage {
     public WebDriver driver;
     public Properties properties;
     // Add comment
@@ -30,6 +32,8 @@ public abstract class BasePage {
     private WebElement homeButton;
 
     private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
+
+    public BasePage() {}
 
     public WebDriver initDriver(String browser){
         System.out.println("Browser value is : " + browser);
@@ -54,22 +58,20 @@ public abstract class BasePage {
         }
         getDriver().manage().deleteAllCookies();
         getDriver().manage().window().maximize();
-        ElementUtil.implicitlyWait(getDriver(), 10, TimeUnit.SECONDS);
+        ElementUtil.implicitlyWait(getDriver(), 3, TimeUnit.SECONDS);
         return getDriver();
     }
 
-    public static synchronized WebDriver getDriver() {
+    public synchronized WebDriver getDriver() {
         return tlDriver.get();
     }
 
     public Properties initProp() {
         properties = new Properties();
-        try (FileInputStream ip = new FileInputStream("../config/config.properties")) {
-            properties.load(ip);
-        } catch (FileNotFoundException e) {
-            System.err.println("Config file not found: " + e.getMessage());
+        try (InputStream input = new FileInputStream("src/main/java/config/config.properties")) {
+            properties.load(input);
         } catch (IOException e) {
-            System.err.println("Error loading config file: " + e.getMessage());
+            e.printStackTrace();
         }
         return properties;
     }

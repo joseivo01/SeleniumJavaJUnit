@@ -11,42 +11,39 @@ import java.util.List;
 import java.util.Map;
 
 public class HomePage extends BasePage{
-    private final WebDriver driver;
 
     // Examples (SignUpFrom, WebTable, ListItems, IFrames...)
     @FindBy(css = ".myhmenu > li > b > a")
     private List<WebElement> dummyControlsExamplesLinks;
 
     // Dictionaries options of Dummy Controls and their links
-    private Map<String, WebElement> dummyControlsExamplesPlatform;
+    private Map<String, WebElement> dummyControlsSelectedItens;
 
-    public HomePage(WebDriver driver) {
+    public HomePage(WebDriver driver_received) {
         super();
-        this.driver = driver;
-        // Created to initiate all selectors that use @FindBy, without this not works!
-        PageFactory.initElements(driver, this);
+        this.driver = driver_received;
+        this.initProp();
+        PageFactory.initElements(this.driver, this);
+        openHomePage();
         initializeDictionaries();
     }
 
     public void openHomePage(){
-        driver.navigate().to(properties.getProperty("driver.base-url"));
+        driver.get(properties.getProperty("driver.base-url"));
     }
 
-    public void choosePlatform(String platform){
-        if(dummyControlsExamplesPlatform.containsKey(platform.toLowerCase())){
-            dummyControlsExamplesPlatform.get(platform.toLowerCase()).click();
+    public void chooseOptionControl(String platform){
+        if(dummyControlsSelectedItens.containsKey(platform.toLowerCase())){
+            dummyControlsSelectedItens.get(platform.toLowerCase()).click();
         }
     }
 
-    public void initializeDictionaries(){
-        dummyControlsExamplesPlatform = new HashMap<String, WebElement>();
+    private void initializeDictionaries(){
+        dummyControlsSelectedItens = new HashMap<String, WebElement>();
         for(WebElement linkOption : dummyControlsExamplesLinks){
-            dummyControlsExamplesPlatform.put(linkOption.getText().toLowerCase(), linkOption);
+            String linkText = linkOption.getText().toLowerCase();
+            dummyControlsSelectedItens.put(linkText, linkOption);
         }
     }
 
-    // Is only to no give any erros
-    public void setDummyControlsExamplesLinks(List<WebElement> localDummyControlsExamplesLinks) {
-        this.dummyControlsExamplesLinks = localDummyControlsExamplesLinks;
-    }
 }

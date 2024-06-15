@@ -15,11 +15,13 @@ public abstract class BaseTest {
     protected static Properties properties;
     protected static WebDriver driver;
 
+    // All methods annotated with @ is executed immediately
     @BeforeAll
-    public static void setUp(){
-        basePage = new BasePage(){};
-        properties = basePage.initProp();
-        driver = basePage.initDriver(properties.getProperty("browser"));
+    public static void setUp() {
+        basePage = new BasePage();
+        properties = basePage.initProp(); // Inicializa a variável 'properties'
+        System.out.println(properties.getProperty("driver.base-url"));
+        driver = basePage.initDriver(properties.getProperty("driver.browser"));
     }
 
     @AfterEach

@@ -1,7 +1,6 @@
 package pages;
 
 import base.BasePage;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,6 +42,9 @@ public class SignUpPage extends BasePage {
 
     @FindBy(css = "div.linesubmit > input[onclick='MySubmit()']")
     private WebElement sendButton;
+
+    @FindBy(css = "div.text-align > a[href='http://www.qavalidation.com']")
+    private WebElement tutorialBtn;
 
     public SignUpPage(WebDriver driver){
         super();
@@ -107,6 +109,10 @@ public class SignUpPage extends BasePage {
 
     public void clickOnSendButton(){
         sendButton.click();
+    }
+
+    public void clickOnTutorialButton(){
+        tutorialBtn.click();
     }
 
 }
