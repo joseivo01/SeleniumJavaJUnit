@@ -11,14 +11,13 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public abstract class BaseTest {
-    private static BasePage basePage;
     protected static Properties properties;
     protected static WebDriver driver;
 
     // All methods annotated with @ is executed immediately
     @BeforeAll
     public static void setUp() {
-        basePage = new BasePage();
+        BasePage basePage = new BasePage();
         properties = basePage.initProp(); // Inicializa a variável 'properties'
         System.out.println(properties.getProperty("driver.base-url"));
         driver = basePage.initDriver(properties.getProperty("driver.browser"));

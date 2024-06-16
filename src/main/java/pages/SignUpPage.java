@@ -1,14 +1,19 @@
 package pages;
 
 import base.BasePage;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import utils.ElementUtil;
 
 import java.io.File;
+import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SignUpPage extends BasePage {
     private final WebDriver driver;
@@ -105,6 +110,14 @@ public class SignUpPage extends BasePage {
     public void selectAutomation(String automationToolSelected){
         Select selectedTool = new Select(selectAutomationTool);
         selectedTool.selectByValue(automationToolSelected.toLowerCase());
+    }
+
+    public String textOnAlert(){
+        ElementUtil.implicitlyWait(driver, 3, TimeUnit.SECONDS);
+        Alert alert = driver.switchTo().alert();
+        String alertText = alert.getText();
+        alert.accept();
+        return alertText;
     }
 
     public void clickOnSendButton(){

@@ -2,10 +2,14 @@ package tests;
 
 import base.BaseTest;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.HomePage;
 import pages.SignUpPage;
+import utils.ElementUtil;
+
+import java.util.concurrent.TimeUnit;
 
 public class SignUpTest extends BaseTest {
     private static HomePage homePage;
@@ -20,7 +24,18 @@ public class SignUpTest extends BaseTest {
     @Test
     @DisplayName("Accessing SignUp Page")
     public void accessSigUpPage(){
-        homePage.chooseOptionControl("SignUp Form");
+        homePage.openHomePage();
+        homePage.selectOptionPage("SignUp Form");
+        Assertions.assertEquals("https://qavbox.github.io/demo/signup/",homePage.driver.getCurrentUrl());
+    }
+
+    // After add faker library
+    @Test
+    @DisplayName("register an user with corrects datas")
+    public void registerOneUser(){
+        System.out.println("ENTREI NO SEGUNDO -------------------------------------------------------------------");
+        homePage.openHomePage();
+        homePage.selectOptionPage("SignUp Form");
         signUpPage.enterFullName("Random_name");
         signUpPage.enterEmail("email_fake");
         signUpPage.enterTelephone("83838383843");
@@ -28,28 +43,9 @@ public class SignUpTest extends BaseTest {
         signUpPage.selectGenderName("male");
         signUpPage.selectYearExperience("four");
         signUpPage.selectSkill("automationtesting");
-        // Dado que esteja na homePage
-        // E clique me "SignUp"
-        // Então deve está na pagina de SignUp
-    }
-
-    @DisplayName("register an user with corrects datas")
-    public void registerOneUser(String fullName, String emailValue, String telephoneValue){
-        // Dado que esteja na homePage
-        // E clique me "SignUp"
-        // E preencha o campo FullName
-        // E preencha o campo Email
-        // E preencha o telephone
-        // E selecione um arquivo
-        // E clique no Select de Gender
-        // E selecione um Gender
-        // E selecione quantos anos tem de experiência
-        // E selecione suas Skill
-        // E selecione uma ferramenta de automação.
-        // E clique no botão de "Enviar"
-        // Então um alert com o texto "Registration Done!" é exibido
-        // E clique em "OK"
-        // E a pagina deve ser recarregada
+        signUpPage.selectAutomation("cypress");
+        signUpPage.clickOnSendButton();
+        Assertions.assertTrue(signUpPage.textOnAlert().contains("Registration Done!"));
     }
 
     @DisplayName("Check Tutorial Page")
