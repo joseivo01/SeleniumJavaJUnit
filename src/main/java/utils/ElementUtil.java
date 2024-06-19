@@ -1,16 +1,12 @@
 package utils;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.hc.core5.annotation.Internal;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.Instant;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -20,10 +16,10 @@ public class ElementUtil {
     public static int explicitWait;
     public static int pageRefreshWait;
 
-    public ElementUtil(Properties properties){
+    public ElementUtil(Properties properties) {
         implicitWait = Integer.parseInt(properties.getProperty("driver.wait.implicitWait").trim());
         explicitWait = Integer.parseInt(properties.getProperty("driver.wait.explicitWait").trim());
-        pageRefreshWait = Integer.parseInt(properties.getProperty("diver.wait.pageRefreshWait").trim());
+        pageRefreshWait = Integer.parseInt(properties.getProperty("driver.wait.pageRefreshWait").trim());
     }
 
     public static void implicitlyWait(WebDriver driver, int timeOut, TimeUnit timeUnit) {
@@ -69,5 +65,24 @@ public class ElementUtil {
             return false;
         }
         return true;
+    }
+
+    public static void waitForPageToLoad(WebDriver driver) {
+        waitForPageToLoad(driver, pageRefreshWait);
+    }
+
+    public static void waitForPageToLoad(WebDriver driver, int timeoutInSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
+                .until(webDriver -> ((JavascriptExecutor) webDriver)
+                        .executeScript("return document.readyState").equals("complete"));
+    }
+
+    public static void waitForUrlToBe(WebDriver driver, String expectedUrl, int timeoutInSeconds) {
+        if (driver == null) {
+            throw new IllegalArgumentException("WebDriver instance is null");
+        }
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
     }
 }

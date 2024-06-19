@@ -9,7 +9,6 @@ import pages.HomePage;
 import pages.SignUpPage;
 import utils.ElementUtil;
 
-import java.util.concurrent.TimeUnit;
 
 public class SignUpTest extends BaseTest {
     private static HomePage homePage;
@@ -48,11 +47,34 @@ public class SignUpTest extends BaseTest {
         Assertions.assertTrue(signUpPage.textOnAlert().contains("Registration Done!"));
     }
 
+    @Test
     @DisplayName("Check Tutorial Page")
     public void checkTutorialPageIsCorrect(){
-        // Dado que esteja na HomePage
-        // E clique em "SignUp"
-        // E clique no link com nome "Tutorials"
-        // Então é redirecionado para a url "https://qavalidation.com/"
+        // compare if returned url by tutorial button
+        String correctUrl = "http://www.qavalidation.com";
+        // compare if accessed url is the same of get on page.
+        String accessedUrl = "https://qavalidation.com/";
+
+        homePage.openHomePage();
+        homePage.selectOptionPage("SignUp Form");
+        String actualUrl = signUpPage.atributeOnTutorialButton("href");
+
+        driver.get(actualUrl);
+
+        Assertions.assertTrue(actualUrl.contains(correctUrl));
+        Assertions.assertEquals(driver.getCurrentUrl(), accessedUrl);
+    }
+
+    @Test
+    @DisplayName("Check can return to home page")
+    public void checkBackToHomePage(){
+        // compare if returned url by tutorial button
+        String correctUrl = "https://qavbox.github.io/demo/";
+
+        homePage.openHomePage();
+        homePage.selectOptionPage("SignUp Form");
+        homePage.returnToHome();
+
+        Assertions.assertEquals(driver.getCurrentUrl(), correctUrl);
     }
 }

@@ -48,7 +48,7 @@ public class SignUpPage extends BasePage {
     @FindBy(css = "div.linesubmit > input[onclick='MySubmit()']")
     private WebElement sendButton;
 
-    @FindBy(css = "div.text-align > a[href='http://www.qavalidation.com']")
+    @FindBy(css = "a[href='http://www.qavalidation.com']")
     private WebElement tutorialBtn;
 
     public SignUpPage(WebDriver driver){
@@ -113,7 +113,6 @@ public class SignUpPage extends BasePage {
     }
 
     public String textOnAlert(){
-        ElementUtil.implicitlyWait(driver, 3, TimeUnit.SECONDS);
         Alert alert = driver.switchTo().alert();
         String alertText = alert.getText();
         alert.accept();
@@ -124,8 +123,9 @@ public class SignUpPage extends BasePage {
         sendButton.click();
     }
 
-    public void clickOnTutorialButton(){
-        tutorialBtn.click();
+    public String atributeOnTutorialButton(String atribute){
+        ElementUtil.waitForElementVisibility(driver, tutorialBtn);
+        return tutorialBtn.getAttribute(atribute);
     }
 
 }

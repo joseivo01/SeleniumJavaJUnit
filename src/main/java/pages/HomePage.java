@@ -44,10 +44,7 @@ public class HomePage extends BasePage{
 
     @FindBy(css = ".myhmenu > li > b > a[href='/demo/autosuggestion']")
     private WebElement autoSuggestionLink;
-
-    // Dictionaries options of Dummy Controls and their links
-    private Map<String, WebElement> dummyControlsSelectedItens;
-
+    
     public HomePage(WebDriver driver_received) {
         super();
         this.driver = driver_received;
