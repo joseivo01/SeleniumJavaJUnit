@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ```markdown
 # Projeto de Teste Automático com Selenium e JUnit
 
@@ -113,3 +114,6 @@ Este projeto está licenciado sob os termos da licença MIT. Consulte o arquivo 
 ```
 
 Este README fornece uma visão geral do projeto, requisitos, configuração, estrutura de arquivos, e como executar os testes. Sinta-se à vontade para modificar conforme necessário para se adequar ao seu projeto específico.
+=======
+# SeleniumJavaJUnit
+>>>>>>> 614b6ac97a52bde8a19e609fd16333fa379c56fd
