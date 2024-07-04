@@ -7,8 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.HomePage;
 import pages.SignUpPage;
-import utils.ElementUtil;
-
 
 public class SignUpTest extends BaseTest {
     private static HomePage homePage;
@@ -32,7 +30,6 @@ public class SignUpTest extends BaseTest {
     @Test
     @DisplayName("register an user with corrects datas")
     public void registerOneUser(){
-        System.out.println("ENTREI NO SEGUNDO -------------------------------------------------------------------");
         homePage.openHomePage();
         homePage.selectOptionPage("SignUp Form");
         signUpPage.enterFullName("Random_name");
