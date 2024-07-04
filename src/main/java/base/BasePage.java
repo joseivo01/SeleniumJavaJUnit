@@ -4,7 +4,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -12,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.FindBy;
@@ -23,11 +21,9 @@ import utils.OptionsManager;
 public class BasePage {
     public WebDriver driver;
     public Properties properties;
-    // Add comment
-    // Created:
+
     public OptionsManager optionsManager;
 
-    // add seletor
     @FindBy(css="input[name='home'][value='Home']")
     private WebElement homeButton;
 
